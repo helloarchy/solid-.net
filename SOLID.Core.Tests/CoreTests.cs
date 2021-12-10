@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using NUnit.Framework;
 using SOLID.Core.Models;
+using SOLID.Core.Tests.Fixtures;
 
 namespace SOLID.Core.Tests;
 
@@ -12,16 +13,12 @@ public class Tests
     {
     }
 
-    [Test]
-    public void ItPopulatesADeckOfCards()
+    [TestCaseSource(typeof(DeckOfCards))]
+    public void ItPopulatesADeckOfCards((char, int)[] expectedCards)
     {
-        
         var card = new Card();
         var cards = card.Cards;
         
-        Console.WriteLine($"Cards length is {cards.Count}");
-        Console.WriteLine(cards);
-        
-        Assert.AreEqual(cards, new int[5]);
+        Assert.That(cards, Is.EqualTo(expectedCards));
     }
 }
